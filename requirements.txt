@@ -1,0 +1,4 @@
+Django>=4.2.0
+djangorestframework>=3.14.0
+django-allauth>=0.54.0
+pyjwt>=2.6.0
