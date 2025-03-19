@@ -32,9 +32,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # Required by django-allauth
     'rest_framework',  # For API
-    'django_allauth',  # For auth
-    'django_allauth.account',  # Account management
+    'allauth',  # Corrected package name
+    'allauth.account',  # Corrected package name
     'education_erp',  # Our app
 ]
 
@@ -46,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'EducationERP.urls'
@@ -126,3 +128,5 @@ SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
 CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
+
+AUTH_USER_MODEL = 'education_erp.EducationUser'
