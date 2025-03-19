@@ -11,7 +11,7 @@ const LoginPage = () => {
     const [institutionCode, setInstitutionCode] = useState('');
     const [birthDate, setBirthDate] = useState(null);
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState(''); // Added for success message
+    const [success, setSuccess] = useState('');
     const [isSignup, setIsSignup] = useState(false);
     const navigate = useNavigate();
 
@@ -21,9 +21,12 @@ const LoginPage = () => {
             const response = await axios.post('http://127.0.0.1:8000/api/auth/login/', { email, password });
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('role', response.data.role);
-            navigate('/dashboard');
+            setSuccess(`Welcome back, ${response.data.role}! Redirecting...`); // Use response
+            setError('');
+            setTimeout(() => navigate('/dashboard'), 1000); // Slight delay for user feedback
         } catch (err) {
             setError('Login failed. Check your credentials.');
+            setSuccess('');
         }
     };
 
@@ -38,7 +41,7 @@ const LoginPage = () => {
                 role,
                 birth_date: birthDate ? birthDate.toISOString().split('T')[0] : null,
             });
-            setSuccess('Signup successful! Check your email to verify.'); // Use response
+            setSuccess('Signup successful! Check your email to verify.');
             setError('');
         } catch (err) {
             setError('Signup failed. Invalid institution code or email already exists.');
@@ -53,7 +56,7 @@ const LoginPage = () => {
                     <div className="card shadow-lg p-4" style={{ background: 'rgba(255, 255, 255, 0.1)', border: '1px solid #00ffcc', color: '#fff' }}>
                         <h2 className="text-center mb-4">{isSignup ? 'Sign Up' : 'Login'}</h2>
                         {error && <p className="text-danger text-center">{error}</p>}
-                        {success && <p className="text-success text-center">{success}</p>} {/* Added success message */}
+                        {success && <p className="text-success text-center">{success}</p>}
                         <form onSubmit={isSignup ? handleSignup : handleLogin}>
                             <div className="mb-3">
                                 <label className="form-label">Email</label>
